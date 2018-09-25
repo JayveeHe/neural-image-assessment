@@ -37,17 +37,17 @@ print("Loading training set and val set")
 #         if i % count == 0 and i != 0:
 #             print('Loaded %d percent of the dataset' % (i / 255000. * 100))
 
-files = filter(lambda  x: x !='.DS_Store',os.listdir(base_images_path))
+files = filter(lambda x: x != '.DS_Store', os.listdir(base_images_path))
 for i, fname in enumerate(files):
     raw_name = fname.split('.jpg')[0]
-    score = float(raw_name.split('_')[-1])*2
+    score = float(raw_name.split('_')[-1]) * 2
     # token = line.split('_')
     # id = int(token[1])
 
     # values = np.array(token[2:12], dtype='float32')
     # values /= values.sum()
 
-    file_path = os.path.join(base_images_path , str(raw_name) + '.jpg')
+    file_path = os.path.join(base_images_path, str(raw_name) + '.jpg')
     if os.path.exists(file_path):
         train_image_paths.append(file_path)
         train_scores.append(score)
@@ -69,6 +69,7 @@ print('Train set size : ', train_image_paths.shape, train_scores.shape)
 print('Val set size : ', val_image_paths.shape, val_scores.shape)
 print('Train and validation datasets ready !')
 
+
 def parse_data(filename, scores):
     '''
     Loads the image file, and randomly applies crops and flips to each image.
@@ -88,6 +89,7 @@ def parse_data(filename, scores):
     image = (tf.cast(image, tf.float32) - 127.5) / 127.5
     return image, scores
 
+
 def parse_data_without_augmentation(filename, scores):
     '''
     Loads the image file without any augmentation. Used for validation set.
@@ -104,6 +106,7 @@ def parse_data_without_augmentation(filename, scores):
     image = tf.image.resize_images(image, (IMAGE_SIZE, IMAGE_SIZE))
     image = (tf.cast(image, tf.float32) - 127.5) / 127.5
     return image, scores
+
 
 def train_generator(batchsize, shuffle=True):
     '''
@@ -136,13 +139,15 @@ def train_generator(batchsize, shuffle=True):
             try:
                 X_batch, y_batch = sess.run(train_batch)
                 yield (X_batch, y_batch)
-            except:
+            except Exception, e:
+                print 'exception, %s' % e
                 train_iterator = train_dataset.make_initializable_iterator()
                 sess.run(train_iterator.initializer)
                 train_batch = train_iterator.get_next()
 
                 X_batch, y_batch = sess.run(train_batch)
                 yield (X_batch, y_batch)
+
 
 def val_generator(batchsize):
     '''
@@ -178,6 +183,7 @@ def val_generator(batchsize):
 
                 X_batch, y_batch = sess.run(val_batch)
                 yield (X_batch, y_batch)
+
 
 def features_generator(record_path, faeture_size, batchsize, shuffle=True):
     '''

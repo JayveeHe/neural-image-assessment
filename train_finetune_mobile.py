@@ -96,11 +96,11 @@ early_stopper = keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, v
 tensorboard = TensorBoardBatch(log_dir='./finetune_mobilenet_logs/')
 callbacks = [checkpoint, tensorboard, early_stopper]
 
-batchsize = 200
+batchsize = 500
 epochs = 20
 
 model.fit_generator(train_generator(batchsize=batchsize),
-                    steps_per_epoch=(250000. // batchsize),
+                    steps_per_epoch=(60000. // batchsize),
                     epochs=epochs, verbose=1, callbacks=callbacks,
                     validation_data=val_generator(batchsize=batchsize),
                     validation_steps=(5000. // batchsize))
