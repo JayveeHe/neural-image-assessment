@@ -1,5 +1,6 @@
 import os
 
+from keras.applications import MobileNet
 from keras.models import Model
 from keras.layers import Dense, Dropout
 from keras.callbacks import ModelCheckpoint, TensorBoard
@@ -58,7 +59,7 @@ def earth_mover_loss(y_true, y_pred):
 
 image_size = 224
 
-base_model = NASNetMobile((image_size, image_size, 3), include_top=False, pooling='avg', weight_decay=0, dropout=0)
+base_model = MobileNet((image_size, image_size, 3), alpha=1, include_top=False, pooling='avg')
 for layer in base_model.layers:
     layer.trainable = False
 
@@ -67,12 +68,12 @@ x = Dense(10, activation='softmax')(x)
 
 model = Model(base_model.input, x)
 model.summary()
-optimizer = Adam(lr=1e-4)
+optimizer = Adam(lr=1e-3)
 model.compile(optimizer, loss=earth_mover_loss)
 
 # load weights from trained model if it exists
-if os.path.exists('weights/nasnet_weights.h5'):
-    model.load_weights('weights/nasnet_weights.h5')
+if os.path.exists('weights/mobilenet_weights.h5'):
+    model.load_weights('weights/mobilenet_weights.h5')
 
 # load pre-trained NIMA(NASNet Mobile) classifier weights
 # if os.path.exists('weights/nasnet_pretrained_weights.h5'):
