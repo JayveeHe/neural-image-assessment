@@ -83,7 +83,7 @@ def parse_data(filename, scores):
         an image referred to by the filename and its scores
     '''
     image = tf.read_file(filename)
-    image = tf.image.decode_jpeg(image, channels=3)
+    image = tf.image.decode_jpeg(image, channels=3,try_recover_truncated=True)
     image = tf.image.resize_images(image, (256, 256))
     image = tf.random_crop(image, size=(IMAGE_SIZE, IMAGE_SIZE, 3))
     image = tf.image.random_flip_left_right(image)
