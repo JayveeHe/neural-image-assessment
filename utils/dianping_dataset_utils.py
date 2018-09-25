@@ -120,7 +120,7 @@ def train_generator(batchsize, shuffle=True):
     with tf.Session() as sess:
         # create a dataset
         train_dataset = tf.data.Dataset.from_tensor_slices((train_image_paths, train_scores))
-        train_dataset = train_dataset.map(parse_data, num_parallel_calls=2)
+        train_dataset = train_dataset.map(parse_data, num_parallel_calls=12)
 
         train_dataset = train_dataset.batch(batchsize)
         train_dataset = train_dataset.repeat()
