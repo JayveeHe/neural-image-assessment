@@ -83,8 +83,8 @@ with tf.device('/CPU:0'), open(args.output, 'w') as fout:
 
         fout.write(img_path + '\t' + str(mean) + '\n')
 
-        print("Evaluating : ", img_path)
-        print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
+        # print("Evaluating : ", img_path)
+        # print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
 
     if rank_images:
         print("*" * 40, "Ranking Images", "*" * 40)
