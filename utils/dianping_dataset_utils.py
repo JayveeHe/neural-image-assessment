@@ -82,13 +82,17 @@ def parse_data(filename, scores):
     Returns:
         an image referred to by the filename and its scores
     '''
-    image = tf.read_file(filename)
-    image = tf.image.decode_jpeg(image, channels=3,try_recover_truncated=True)
-    image = tf.image.resize_images(image, (256, 256))
-    image = tf.random_crop(image, size=(IMAGE_SIZE, IMAGE_SIZE, 3))
-    image = tf.image.random_flip_left_right(image)
-    image = (tf.cast(image, tf.float32) - 127.5) / 127.5
-    return image, scores
+    try:
+        image = tf.read_file(filename)
+        image = tf.image.decode_jpeg(image, channels=3, try_recover_truncated=True, acceptable_fraction=0.8)
+        image = tf.image.resize_images(image, (256, 256))
+        image = tf.random_crop(image, size=(IMAGE_SIZE, IMAGE_SIZE, 3))
+        image = tf.image.random_flip_left_right(image)
+        image = (tf.cast(image, tf.float32) - 127.5) / 127.5
+        return image, scores
+    except Exception, e:
+        print e
+        return
 
 
 def parse_data_without_augmentation(filename, scores):
