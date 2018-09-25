@@ -87,7 +87,7 @@ with  open(args.output, 'w') as fout:
 
         count += 1
         if count % 1000 == 0:
-            print '%s done'
+            print '%s done' % count
             fout.flush()
             # print("Evaluating : ", img_path)
             # print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
