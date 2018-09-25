@@ -25,34 +25,31 @@ files = filter(lambda x: x != '.DS_Store', os.listdir(base_images_path))
 TOTAL = len(files)
 
 print("Loading training set and val set")
-with open(ava_dataset_path, mode='r') as f:
-    lines = f.readlines()
-    for i, fname in enumerate(files):
-        raw_name = fname.split('.jpg')[0]
-        score = float(raw_name.split('_')[-1]) * 2
-        # token = line.split('_')
-        # id = int(token[1])
+for i, fname in enumerate(files):
+    raw_name = fname.split('.jpg')[0]
+    score = float(raw_name.split('_')[-1]) * 2
+    # token = line.split('_')
+    # id = int(token[1])
 
-        # values = np.array(token[2:12], dtype='float32')
-        # values /= values.sum()
+    # values = np.array(token[2:12], dtype='float32')
+    # values /= values.sum()
 
-        file_path = os.path.join(base_images_path, str(raw_name) + '.jpg')
+    file_path = os.path.join(base_images_path, str(raw_name) + '.jpg')
 
+    # token = line.split()
+    # id = int(token[1])
+    #
+    # values = np.array(token[2:12], dtype='float32')
+    # values /= values.sum()
+    #
+    # file_path = base_images_path + str(id) + '.jpg'
+    if os.path.exists(file_path):
+        train_image_paths.append(file_path)
+        train_scores.append(score)
 
-        # token = line.split()
-        # id = int(token[1])
-        #
-        # values = np.array(token[2:12], dtype='float32')
-        # values /= values.sum()
-        #
-        # file_path = base_images_path + str(id) + '.jpg'
-        if os.path.exists(file_path):
-            train_image_paths.append(file_path)
-            train_scores.append(score)
-
-        count = 255000 // 20
-        if i % count == 0 and i != 0:
-            print('Loaded %0.2f of the dataset' % (i / 255000. * 100))
+    count = 255000 // 20
+    if i % count == 0 and i != 0:
+        print('Loaded %0.2f of the dataset' % (i / 255000. * 100))
 
 
 train_image_paths = np.array(train_image_paths)
