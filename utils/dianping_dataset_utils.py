@@ -6,8 +6,8 @@ import glob
 import tensorflow as tf
 
 # path to the images and the text file which holds the scores and ids
-base_images_path = r'/data/hejiawei03/neural-image-assessment/dianping_pic'
-# base_images_path = r'/Users/jayveehe/Documents/jobs/首图项目/task18/5分'
+base_images_path = r'/data/hejiawei03/neural-image-assessment/dianping_pics/pics'
+base_images_path = r'/Users/jayveehe/Documents/jobs/首图项目/task18/5分'
 # ava_dataset_path = r'D:\Yue\Documents\Datasets\AVA_dataset\AVA.txt'
 
 IMAGE_SIZE = 224
@@ -40,14 +40,14 @@ print("Loading training set and val set")
 files = filter(lambda  x: x !='.DS_Store',os.listdir(base_images_path))
 for i, fname in enumerate(files):
     raw_name = fname.split('.jpg')[0]
-    score = int(raw_name.split('_')[-1])*2
+    score = float(raw_name.split('_')[-1])*2
     # token = line.split('_')
     # id = int(token[1])
 
     # values = np.array(token[2:12], dtype='float32')
     # values /= values.sum()
 
-    file_path = base_images_path + str(raw_name) + '.jpg'
+    file_path = os.path.join(base_images_path , str(raw_name) + '.jpg')
     if os.path.exists(file_path):
         train_image_paths.append(file_path)
         train_scores.append(score)
