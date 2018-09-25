@@ -7,7 +7,6 @@ from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras.optimizers import Adam
 from keras import backend as K
 
-from utils.nasnet import NASNetMobile
 
 from utils.dianping_dataset_utils import train_generator, val_generator
 

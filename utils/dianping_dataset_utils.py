@@ -7,7 +7,7 @@ import tensorflow as tf
 
 # path to the images and the text file which holds the scores and ids
 base_images_path = r'/data/hejiawei03/neural-image-assessment/dianping_pics/pics'
-base_images_path = r'/Users/jayveehe/Documents/jobs/首图项目/task18/5分'
+# base_images_path = r'/Users/jayveehe/Documents/jobs/首图项目/task18/5分'
 # ava_dataset_path = r'D:\Yue\Documents\Datasets\AVA_dataset\AVA.txt'
 
 IMAGE_SIZE = 224
