@@ -38,6 +38,7 @@ print("Loading training set and val set")
 #             print('Loaded %d percent of the dataset' % (i / 255000. * 100))
 
 files = filter(lambda x: x != '.DS_Store', os.listdir(base_images_path))
+TOTAL = len(files)
 for i, fname in enumerate(files):
     raw_name = fname.split('.jpg')[0]
     score = float(raw_name.split('_')[-1]) * 2
@@ -52,9 +53,9 @@ for i, fname in enumerate(files):
         train_image_paths.append(file_path)
         train_scores.append(score)
 
-    count = 255000 // 20
+    count = TOTAL // 20
     if i % count == 0 and i != 0:
-        print('Loaded %d percent of the dataset' % (i / 255000. * 100))
+        print('Loaded %d percent of the dataset' % (i / TOTAL * 100.))
 
 train_image_paths = np.array(train_image_paths)
 train_scores = np.array(train_scores, dtype='float32')
