@@ -81,7 +81,7 @@ with tf.device('/CPU:0'), open(args.output, 'w') as fout:
         file_name = Path(img_path).name.lower()
         score_list.append((file_name, mean))
 
-        fout.write(img_path + '\t' + str(mean) + '\n')
+        fout.write(img_path.split('/')[-1] + '\t' + str(mean) + '\n')
 
         # print("Evaluating : ", img_path)
         # print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))

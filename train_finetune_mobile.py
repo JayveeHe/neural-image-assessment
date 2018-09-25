@@ -83,6 +83,7 @@ model.compile(optimizer, loss=earth_mover_loss)
 # load weights from trained model if it exists
 if os.path.exists('weights/mobilenet_weights.h5'):
     model.load_weights('weights/mobilenet_weights.h5')
+    print 'mobilenet weights loaded'
 
 # load pre-trained NIMA(NASNet Mobile) classifier weights
 # if os.path.exists('weights/nasnet_pretrained_weights.h5'):
