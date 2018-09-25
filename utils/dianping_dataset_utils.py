@@ -59,10 +59,11 @@ for i, fname in enumerate(files):
 train_image_paths = np.array(train_image_paths)
 train_scores = np.array(train_scores, dtype='float32')
 
-val_image_paths = train_image_paths[-5000:]
-val_scores = train_scores[-5000:]
-train_image_paths = train_image_paths[:-5000]
-train_scores = train_scores[:-5000]
+VALID_SIZE = 25
+val_image_paths = train_image_paths[-VALID_SIZE:]
+val_scores = train_scores[-VALID_SIZE:]
+train_image_paths = train_image_paths[:-VALID_SIZE]
+train_scores = train_scores[:-VALID_SIZE]
 
 print('Train set size : ', train_image_paths.shape, train_scores.shape)
 print('Val set size : ', val_image_paths.shape, val_scores.shape)
@@ -118,7 +119,7 @@ def train_generator(batchsize, shuffle=True):
     '''
     with tf.Session() as sess:
         # create a dataset
-        train_dataset = tf.data.Dataset().from_tensor_slices((train_image_paths, train_scores))
+        train_dataset = tf.data.Dataset.from_tensor_slices((train_image_paths, train_scores))
         train_dataset = train_dataset.map(parse_data, num_parallel_calls=2)
 
         train_dataset = train_dataset.batch(batchsize)
@@ -155,7 +156,7 @@ def val_generator(batchsize):
         a batch of samples (X_images, y_scores)
     '''
     with tf.Session() as sess:
-        val_dataset = tf.data.Dataset().from_tensor_slices((val_image_paths, val_scores))
+        val_dataset = tf.data.Dataset.from_tensor_slices((val_image_paths, val_scores))
         val_dataset = val_dataset.map(parse_data_without_augmentation)
 
         val_dataset = val_dataset.batch(batchsize)

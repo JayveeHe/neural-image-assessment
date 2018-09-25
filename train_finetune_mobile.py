@@ -78,9 +78,9 @@ if os.path.exists('weights/mobilenet_weights.h5'):
 # if os.path.exists('weights/nasnet_pretrained_weights.h5'):
 #     model.load_weights('weights/nasnet_pretrained_weights.h5', by_name=True)
 
-checkpoint = ModelCheckpoint('weights/nasnet_weights.h5', monitor='val_loss', verbose=1, save_weights_only=True, save_best_only=True,
+checkpoint = ModelCheckpoint('weights/finetune_mobilenet_weights.h5', monitor='val_loss', verbose=1, save_weights_only=True, save_best_only=True,
                              mode='min')
-tensorboard = TensorBoardBatch(log_dir='./nasnet_logs/')
+tensorboard = TensorBoardBatch(log_dir='./finetune_mobilenet_logs/')
 callbacks = [checkpoint, tensorboard]
 
 batchsize = 200
