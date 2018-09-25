@@ -66,6 +66,8 @@ with tf.device('/CPU:0'), open(args.output, 'w') as fout:
 
     score_list = []
 
+    count = 0
+
     for img_path in imgs:
         img = load_img(img_path, target_size=target_size)
         x = img_to_array(img)
@@ -83,8 +85,12 @@ with tf.device('/CPU:0'), open(args.output, 'w') as fout:
 
         fout.write(img_path.split('/')[-1] + '\t' + str(mean) + '\n')
 
-        # print("Evaluating : ", img_path)
-        # print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
+        count += 1
+        if count % 1000 == 0:
+            print '%s done'
+            fout.flush()
+            # print("Evaluating : ", img_path)
+            # print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
 
     if rank_images:
         print("*" * 40, "Ranking Images", "*" * 40)
