@@ -56,7 +56,7 @@ elif args.img[0] is not None:
 else:
     raise RuntimeError('Either -dir or -img arguments must be passed as argument')
 
-with tf.device('/CPU:0') ,open(args.output) as fout:
+with tf.device('/CPU:0'), open(args.output, 'w') as fout:
     base_model = MobileNet((None, None, 3), alpha=1, include_top=False, pooling='avg', weights=None)
     x = Dropout(0.75)(base_model.output)
     x = Dense(10, activation='softmax')(x)
@@ -85,7 +85,6 @@ with tf.device('/CPU:0') ,open(args.output) as fout:
 
         print("Evaluating : ", img_path)
         print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
-
 
     if rank_images:
         print("*" * 40, "Ranking Images", "*" * 40)
