@@ -59,7 +59,7 @@ for i, fname in enumerate(files):
 train_image_paths = np.array(train_image_paths)
 train_scores = np.array(train_scores, dtype='float32')
 
-VALID_SIZE = 25
+VALID_SIZE = 5000
 val_image_paths = train_image_paths[-VALID_SIZE:]
 val_scores = train_scores[-VALID_SIZE:]
 train_image_paths = train_image_paths[:-VALID_SIZE]
