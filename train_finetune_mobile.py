@@ -89,7 +89,7 @@ if os.path.exists('weights/mobilenet_weights.h5'):
 # if os.path.exists('weights/nasnet_pretrained_weights.h5'):
 #     model.load_weights('weights/nasnet_pretrained_weights.h5', by_name=True)
 
-checkpoint = ModelCheckpoint('weights/finetune_mobilenet_weights.h5', monitor='val_loss', verbose=1,
+checkpoint = ModelCheckpoint('weights/finetune_mobilenet_weights_25w.h5', monitor='val_loss', verbose=1,
                              save_weights_only=False, save_best_only=True,
                              mode='min')
 early_stopper = keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, verbose=0, mode='auto')
@@ -100,7 +100,7 @@ batchsize = 500
 epochs = 20
 
 model.fit_generator(train_generator(batchsize=batchsize),
-                    steps_per_epoch=(60000. // batchsize),
+                    steps_per_epoch=(250000. // batchsize),
                     epochs=epochs, verbose=1, callbacks=callbacks,
                     validation_data=val_generator(batchsize=batchsize),
                     validation_steps=(5000. // batchsize))
