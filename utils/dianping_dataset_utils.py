@@ -122,6 +122,8 @@ def train_generator(batchsize, shuffle=True):
     '''
     with tf.Session() as sess:
         # create a dataset
+        print 'score mean: %s' % np.mean(train_scores)
+        print 'score std: %s' % np.std(train_scores)
         train_dataset = tf.data.Dataset.from_tensor_slices((train_image_paths, train_scores))
         train_dataset = train_dataset.map(parse_data, num_parallel_calls=12)
 
