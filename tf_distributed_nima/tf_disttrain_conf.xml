@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <!-- tensorflow作业的名字 -->
+        <name>afo.app.name</name>
+        <value>mainpic-train-nima</value>
+    </property>
+    <property>
+        <!-- tensorflow作业做在的队列 -->
+        <name>afo.app.queue</name>
+        <value>root.zw01_training.hadoop-dpsr.aitech</value>
+    </property>
+    <property>
+        <!-- tensorflow virtaulenv的版本，pip 列表：https://wiki.sankuai.com/pages/viewpage.action?pageId=950869185 -->
+        <name>afo.engine.tensorflow.virtualenv.name</name>
+        <value>tensorflow_1_4_0</value>
+    </property>
+    <property>
+        <name>afo.role.worker.exit-with-chief</name>
+        <value>true</value>
+    </property>
+    <!-- defined ps and worker size -->
+    <property>
+        <!-- tensorflow作业使用的parameter server的个数 -->
+        <name>parameter.servers</name>
+        <value>1</value>
+    </property>
+    <property>
+        <!-- tensorflow作业的worker的个数 -->
+        <name>workers</name>
+        <value>2</value>
+    </property>
+    <!-- defined ps/worker resource -->
+    <property>
+        <!-- tensorflow作业的worker的内存大小，单位是MB -->
+        <name>worker.memory</name>
+        <value>15480</value>
+    </property>
+    <property>
+        <!-- tensorflow作业的worker的cpu个数 -->
+        <name>worker.vcore</name>
+        <value>8</value>
+    </property>
+    <property>
+        <!-- tensorflow作业的worker的gpu个数 -->
+        <name>worker.gpu</name>
+        <value>1</value>
+    </property>
+    <property>
+        <!-- tensorboard内存 -->
+        <name>    afo.role.board.resource.mb</name>
+        <value>10240</value>
+    </property>
+    <property>
+        <name>parameter.server.memory</name>
+        <value>25240</value>
+    </property>
+    <property>
+        <name>parameter.server.vcore</name>
+        <value>12</value>
+    </property>
+    <!-- defined ps/worker main python script -->
+    <!-- 大象消息接收者,必填，无该配置（或为空）则表示不使用提醒功能-->
+    <property>
+        <name>afo.xm.notice.receivers.account</name>
+        <value>hejiawei03</value>
+    </property>
+    <property>
+        <!-- tensorflow作业的worker所执行的命令，也就是入口脚本 -->
+        <name>worker.script</name>
+        <value>python utils.py</value>
+    </property>
+    <property>
+        <!-- tensorflow作业的ps所执行的命令，也就是入口脚本 -->
+        <name>parameter.server.script</name>
+        <value>python dist_train.py
+        </value>
+    </property>
+    <!-- 所有name为args开头的配置都是传给worker执行的脚本的命令行参数 -->
+    <property>
+        <!-- 类似的，这个参数等价于传递给入口脚本 -batch_size参数 -->
+        <name>args.batch_size</name>
+        <value>256</value>
+    </property>
+    <property>
+        <name>args.iter_per_epoch</name>
+        <value>500</value>
+    </property>
+    <property>
+        <name>args.max_epoch</name>
+        <value>200</value>
+    </property>
+    <property>
+        <name>args.valid_iter</name>
+        <value>100</value>
+    </property>
+    <property>
+        <name>args.worker_nums</name>
+        <value>5</value>
+    </property>
+    <property>
+        <name>args.gpu_nums</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>args.train_tag</name>
+        <value>querymatch_5wsample_weibo300d</value>
+    </property>
+    <property>
+        <name>args.weights_path</name>
+        <value>viewfs://hadoop-meituan/ghnn05/hadoop-dpsr/hejiawei03/models/resnet_constant_graph_weights.pb</value>
+    </property>
+    <property>
+        <name>args.pkl_weights_path</name>
+        <value>viewfs://hadoop-meituan/ghnn05/hadoop-dpsr/hejiawei03/models/resnet50_weights.pkl</value>
+    </property>
+    <property>
+        <name>args.w2vdict_path</name>
+        <value>viewfs://hadoop-meituan/ghnn01/user/hadoop-dpsr/hejiawei03/nlp/sgns.weibo.bigram-char</value>
+    </property>
+    <!--<property>-->
+    <!--<name>args.weights_meta_path</name>-->
+    <!--<value>viewfs://hadoop-meituan/ghnn05/hadoop-dpsr/hejiawei03/models/local_inception_resnet.ckpt.meta</value>-->
+    <!--</property>-->
+    <!--<property>-->
+    <!--<name>args.weights_ckpt_path</name>-->
+    <!--<value>viewfs://hadoop-meituan/ghnn05/hadoop-dpsr/hejiawei03/models/local_inception_resnet.ckpt</value>-->
+    <!--</property>-->
+    <property>
+        <name>args.is_hdfs</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>args.pic_size</name>
+        <value>224_224</value>
+    </property>
+    <property>
+        <!-- 传递给入口脚本学习率单数-->
+        <name>args.learning_rate</name>
+        <value>0.0000036</value>
+    </property>
+    <property>
+        <!-- checkpoint 和 tensorboard 的输出录几个，请确保路径有读写权限-->
+        <name>args.output_dir</name>
+        <value>viewfs://hadoop-meituan/ghnn05/hadoop-dpsr/hejiawei03/output_models/querymatch_model_v0.2</value>
+    </property>
+    <property>
+        <!-- checkpoint 和 tensorboard 的输出录几个，请确保路径有读写权限-->
+        <name>args.log_dir</name>
+        <value>viewfs://hadoop-meituan/ghnn05/hadoop-dpsr/hejiawei03/tensorboard/querymatch_model_v0.2</value>
+    </property>
+    <!-- defined tensor_board log_dir -->
+    <property>
+        <!-- 如果with.tensor.board参数设置为true，则会在启动worker后，会启动tensorboard程序-->
+        <name>with.tensor.board</name>
+        <value>true</value>
+    </property>
+    <property>
+        <!-- tensorboard所读取的目录，可以读取hdfs目录，但是如果是hdfs目录，请注意需要使用 viewfs://hadoop-meituan/，而不可以是 viewfs:/// 这种方式-->
+        <name>board.log_dir</name>
+        <value>viewfs://hadoop-meituan/ghnn05/hadoop-dpsr/hejiawei03/tensorboard/querymatch_model_v0.2</value>
+    </property>
+</configuration>
